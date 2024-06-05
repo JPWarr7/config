@@ -9,6 +9,7 @@ return {
                 null_ls.builtins.formatting.black,
                 null_ls.builtins.diagnostics.erb_lint,
                 null_ls.builtins.diagnostics.mypy,
+                -- null_ls.builtins.formatting.rustfmt,
                 -- null_ls.builtins.diagnostics.ruff
             },
         })
