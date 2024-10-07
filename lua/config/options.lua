@@ -33,6 +33,6 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.splitkeep = "cursor"
 vim.opt.mouse = "a"
-
+-- vim.g.lazyvim_picker = "telescope"
 -- Add asterisks in block comments
 vim.opt.formatoptions:append({ "r" })

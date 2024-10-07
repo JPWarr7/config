@@ -6,13 +6,15 @@ return {
             require("mason").setup()
         end,
     },
-    {
-        "williamboman/mason-lspconfig.nvim",
-        lazy = false,
-        opts = {
-            auto_install = true,
-        },
-    },
+    -- {
+    --     "williamboman/mason-lspconfig.nvim",
+    --     lazy = false,
+    --     opts = {
+    --         auto_install = true,
+    --         ensure_installed = { "tsserver", "html", "cssls", "jsonls", "eslint", "lua_ls", "pyright", "ruff" },
+    --         automatic_installation = false,
+    --     },
+    -- },
     {
         "neovim/nvim-lspconfig",
         lazy = false,
@@ -38,42 +40,45 @@ return {
             lspconfig.lua_ls.setup({
                 capabilities = capabilities,
             })
-            lspconfig.pyright.setup({
-                capabilities = capabilities,
-                filetypes = { "python" },
-            })
+            -- lspconfig.pyright.setup({
+            --     capabilities = capabilities,
+            --     filetypes = { "python" },
+            -- })
             lspconfig.ruff.setup({
                 capabilities = capabilities,
                 filetypes = { "python" },
             })
             lspconfig.rust_analyzer.setup({
-                capabilities = capabilities,
+                -- capabilities = capabilities,
                 settings = {
-                    ["rust-analyzer"] = {
-                        assist = {
-                            importEnforceGranularity = true,
-                            importPrefix = "by_self",
-                        },
-                        cargo = {
-                            loadOutDirsFromCheck = true,
-                        },
-                        procMacro = {
-                            enable = true,
+                    ["rust_analyzer"] = {
+                        -- assist = {
+                        --     importEnforceGranularity = true,
+                        --     importPrefix = "by_self",
+                        -- },
+                        -- cargo = {
+                        --     loadOutDirsFromCheck = true,
+                        -- },
+                        -- procMacro = {
+                        --     enable = true,
+                        -- },
+                        diagnostics = {
+                            enable = false,
                         },
                     },
                 },
-                on_attach = function(client, bufnr)
-                    if client.supports_method("textDocument/formatting") then
-                        vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-                        vim.api.nvim_create_autocmd("BufWritePre", {
-                            group = augroup,
-                            buffer = bufnr,
-                            callback = function()
-                                vim.lsp.buf.format({ bufnr = bufnr })
-                            end,
-                        })
-                    end
-                end,
+                -- on_attach = function(client, bufnr)
+                --     if client.supports_method("textDocument/formatting") then
+                --         vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+                --         vim.api.nvim_create_autocmd("BufWritePre", {
+                --             group = augroup,
+                --             buffer = bufnr,
+                --             callback = function()
+                --                 vim.lsp.buf.format({ bufnr = bufnr })
+                --             end,
+                --         })
+                --     end
+                -- end,
             })
 
             vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
@@ -81,5 +86,12 @@ return {
             vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, {})
             vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
         end,
+        opts = {
+            setup = {
+                rust_analyzer = function()
+                    return true
+                end,
+            },
+        },
     },
 }
